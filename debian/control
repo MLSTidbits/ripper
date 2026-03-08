@@ -1,16 +1,17 @@
-Source: template
-Section: unknown
+Source: ripper
+Section: video
 Priority: optional
-Maintainer: Michael <michaelleeschaecher@gmail.com>
+Maintainer: MLS Tidbits <contact@mlstidbits.com>
 Build-Depends: debhelper-compat (= 13), autotools-dev
 Standards-Version: 4.6.0
-Homepage: <insert the upstream URL, if relevant>
-#Vcs-Browser: https://salsa.debian.org/debian/template
-#Vcs-Git: https://salsa.debian.org/debian/template.git
+Homepage: https://mlstidbits.com
+Vcs-Browser: https://github.com/MLSTidbits/rippr
+#Vcs-Git: https://github.com/MLSTidbits/rippr.git
 Rules-Requires-Root: no
 
-Package: template
+Package: ripper
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: GTK Frontend for MakeMKV written in Python.
+ Ripper uses MakeMKV to rip DVDs and Blu-rays, and provides a user-friendly
+ interface to manage the ripping process.
