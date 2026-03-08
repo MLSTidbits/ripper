@@ -46,7 +46,6 @@ binary-indep: install
 	dh_installchangelogs
 	dh_installsystemd
 	dh_lintian
-	dh_markdownmanpages
 	dh_installman
 	dh_installmime
 	dh_link
