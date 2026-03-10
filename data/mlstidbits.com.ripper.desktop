@@ -1,0 +1,36 @@
+[Desktop Entry]
+# Ripper — GTK4 + libadwaita front-end for MakeMKV
+# Install to: /usr/share/applications/  (system-wide)
+#          or: ~/.local/share/applications/  (per-user)
+
+Version=1.0
+Type=Application
+Name=Ripper
+GenericName=Disc Ripper
+Comment=Rip and backup Blu-ray and DVD discs using MakeMKV
+Icon=media-optical-dvd
+
+# Full path when installed; use the run.sh wrapper during development
+Exec=makemkv-gui %U
+
+Terminal=false
+StartupNotify=true
+StartupWMClass=makemkv-gui
+
+# Reverse-DNS application ID — matches the Adw.Application application_id
+# and the GSettings schema prefix if added later
+X-GNOME-UsesNotifications=true
+
+Categories=AudioVideo;Video;GTK;GNOME;
+Keywords=makemkv;blu-ray;bluray;dvd;rip;backup;mkv;disc;copy;
+
+# MIME types — optical disc images that MakeMKV can open
+MimeType=x-scheme-handler/bluray;x-content/video-bluray;x-content/video-dvd;
+
+# Actions — quick access from the application launcher (right-click / long-press)
+Actions=new-rip;
+
+[Desktop Action new-rip]
+Name=Rip a Disc
+Exec=makemkv-gui
+Icon=media-optical-dvd
