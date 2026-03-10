@@ -35,14 +35,17 @@ sudo apt install \
   makemkv-oss
 ```
 
-> **Note:** `makemkv-bin` and `makemkv-oss` are not in the official repos.
-> Install via the MakeMKV PPA:
-> ```bash
-> sudo add-apt-repository ppa:heyarje/makemkv-beta
-> sudo apt update
-> sudo apt install makemkv-bin makemkv-oss
-> ```
-> Or download directly from [makemkv.com](https://www.makemkv.com/download/).
+**Note:** `makemkv-bin` and `makemkv-oss` are not in the official repos.
+Install via the MakeMKV PPA:
+>
+```bash
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/MLSTidbits.gpg] https://archive.mlstidbits.com/ stable main" | sudo tee /etc/apt/sources.list.d/MLSTidbits.list
+wget -qO - https://archive.mlstidbits.com/key/MLSTidbits.gpg | sudo dd of=/usr/share/keyrings/MLSTidbits.gpg
+
+sudo apt update
+sudo apt install makemkv-bin ripper-gtk
+```
+
 
 ### Fedora
 
@@ -94,81 +97,6 @@ sudo chmod +x /usr/bin/ripper
 sudo cp data/makemkv-gui.desktop /usr/share/applications/
 sudo update-desktop-database /usr/share/applications/
 ```
-
-### Expected installed layout
-
-```
-/usr/lib/ripper/
-├── core/
-│   ├── makemkv_config.py
-│   ├── makemkv_controller.py
-│   ├── makemkv_parser.py
-│   ├── models.py
-│   ├── paths.py          ← resolves all data paths
-│   └── version.py
-└── ui/
-    ├── backup_view.py
-    ├── disc_view.py
-    ├── log_view.py
-    ├── main_window.py
-    └── settings_dialog.py
-
-/usr/share/ripper/
-└── ui/
-    ├── backup_view.ui
-    ├── disc_view.ui
-    ├── log_view.ui
-    ├── main_window.ui
-    └── settings_dialog.ui
-
-/usr/share/doc/ripper/
-├── version
-├── README.md
-└── <additional docs added later>
-```
-
-`src/core/paths.py` resolves all data paths automatically — installed paths take
-priority; the source tree is used automatically during development with no
-configuration required.
-
----
-
-## Project Structure
-
-```tree
-makemkv-gui/
-├── run.sh                      # Dev launcher
-├── pyproject.toml              # Build config
-├── doc/
-│   └── version                 # Application version string (plain text)
-├── src/
-│   ├── main.py                 # Adw.Application entry point
-│   ├── ui/
-│   │   ├── main_window.py      # AdwApplicationWindow + navigation
-│   │   ├── disc_view.py        # Drive picker, title list, rip controls
-│   │   ├── backup_view.py      # Backup job setup and history
-│   │   ├── log_view.py         # Colour-coded log output
-│   │   └── settings_dialog.py  # Adw.PreferencesDialog (6 pages)
-│   └── core/
-│       ├── models.py           # DriveInfo, TitleInfo, BackupJob, RipJob
-│       ├── makemkv_controller.py  # GObject + subprocess orchestration
-│       ├── makemkv_parser.py   # makemkvcon -r output parser
-│       ├── makemkv_config.py   # ~/.MakeMKV/settings.conf reader/writer
-│       ├── paths.py            # Runtime path resolution (installed vs dev)
-│       └── version.py          # Reads version from doc/version
-├── data/
-│   ├── ui/
-│   │   ├── main_window.ui      # Window chrome, about dialog, menu
-│   │   ├── disc_view.ui        # Rip view layout
-│   │   ├── backup_view.ui      # Backup view layout
-│   │   ├── log_view.ui         # Log view layout
-│   │   └── settings_dialog.ui  # Preferences dialog layout
-│   └── makemkv-gui.desktop     # XDG desktop entry
-└── tests/
-    └── test_parser.py
-```
-
----
 
 ## Architecture
 
