@@ -12,6 +12,7 @@ Signals:
     backup-finished (job: BackupJob)
     log-line        (level: str, text: str)
     error           (message: str)
+    libre-drive     (message: str)   — emitted when "Using LibreDrive" found in output
 """
 
 import re
@@ -45,6 +46,7 @@ class MakeMKVController(GObject.Object):
         "log-line":         (GObject.SignalFlags.RUN_FIRST, None, (str, str)),
         "error":            (GObject.SignalFlags.RUN_FIRST, None, (str,)),
         "binary-missing":   (GObject.SignalFlags.RUN_FIRST, None, ()),
+        "libre-drive":      (GObject.SignalFlags.RUN_FIRST, None, (str,)),
     }
 
     def __init__(self):
@@ -265,13 +267,24 @@ class MakeMKVController(GObject.Object):
                 level, text = self._parser.classify_line(line)
                 GLib.idle_add(self.emit, "log-line", level, text)
 
-            # DEBUG: log all lines that may carry LibreDrive info
+            # Scan output for LibreDrive activity and emit signal for the UI.
+            # makemkvcon prints a line containing "Using LibreDrive" when the
+            # drive is running in LibreDrive mode.
             import sys
             for line in result.stdout.splitlines():
                 low = line.lower()
                 if any(k in low for k in ("libre", "firmware", "status", "cinfo:30", "cinfo:31", "cinfo:28")):
                     print(f"[LIBRE-DEBUG] {line}", file=sys.stderr)
-                    GLib.idle_add(self.emit, "log-line", "DEBUG", f"[libre-debug] {line}")
+                if "Using LibreDrive" in line:
+                    # Extract the human-readable portion from MSG lines;
+                    # fall back to the raw line if parsing fails.
+                    msg = line
+                    if line.startswith("MSG:"):
+                        parts = self._parser._split_fields(line[4:])
+                        if len(parts) >= 4:
+                            msg = parts[3].strip('"')
+                    GLib.idle_add(self.emit, "libre-drive", msg)
+                    break
 
             # Extract LibreDrive status and store it on the matching drive
             libre_status = self._parser.parse_libre_drive_status(result.stdout)

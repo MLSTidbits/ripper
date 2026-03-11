@@ -14,10 +14,8 @@ from gi.repository import Gtk, Adw, GLib
 from core.makemkv_controller import MakeMKVController
 from core.models import DriveInfo, TitleInfo
 
-_UI_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-    "data", "ui", "disc_view.ui",
-)
+from core.paths import ui_file as _ui_file
+_UI_FILE = _ui_file("disc_view.ui")
 
 MARGIN_H = 24
 MARGIN_V = 16
@@ -187,6 +185,18 @@ class DiscView(Gtk.Box):
         self._titles_group.set_header_suffix(self._select_all_btn)
 
         content.append(self._drives_group)
+
+        # LibreDrive status label — hidden until "Using LibreDrive" seen in output
+        self._libre_label = Gtk.Label(
+            label="",
+            halign=Gtk.Align.START,
+            margin_start=4,
+            visible=False,
+        )
+        self._libre_label.add_css_class("success")
+        self._libre_label.add_css_class("caption")
+        content.append(self._libre_label)
+
         content.append(self._disc_info_bar)
         content.append(self._titles_group)
 
@@ -233,6 +243,7 @@ class DiscView(Gtk.Box):
         self.controller.connect("progress",       self._on_progress)
         self.controller.connect("rip-finished",   self._on_rip_finished)
         self.controller.connect("rip-title",      self._on_rip_title)
+        self.controller.connect("libre-drive",    self._on_libre_drive)
 
     # ------------------------------------------------------------------ #
     #  Public API                                                          #
@@ -259,7 +270,14 @@ class DiscView(Gtk.Box):
     #  Callbacks                                                           #
     # ------------------------------------------------------------------ #
 
+    def _on_libre_drive(self, _ctrl, message: str):
+        """Show the LibreDrive status message below the drives list."""
+        self._libre_label.set_label(message)
+        self._libre_label.set_visible(True)
+
     def _on_drives_updated(self, _ctrl, drives: list):
+        self._libre_label.set_visible(False)
+        self._libre_label.set_label("")
         self._clear_list(self._drives_list)
         if drives:
             for drive in drives:
