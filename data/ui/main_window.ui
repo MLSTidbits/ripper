@@ -23,7 +23,7 @@
         <attribute name="action">win.settings</attribute>
       </item>
       <item>
-        <attribute name="label">About Ripper</attribute>
+        <attribute name="label">About</attribute>
         <attribute name="action">win.about</attribute>
       </item>
     </section>
@@ -33,7 +33,7 @@
        Window geometry — MainWindow.__init__ reads these via get_object
        ═══════════════════════════════════════════════════════════════════ -->
   <object class="AdwApplicationWindow" id="window_geometry">
-    <property name="default-width">1080</property>
+    <property name="default-width">1000</property>
     <property name="default-height">720</property>
   </object>
 
@@ -41,7 +41,7 @@
        Window title widget — set_title_widget() called in Python
        ═══════════════════════════════════════════════════════════════════ -->
   <object class="AdwWindowTitle" id="win_title">
-    <property name="title">Ripper</property>
+    <property name="title">MakeMKV</property>
     <property name="subtitle"></property>
   </object>
 
@@ -97,86 +97,11 @@
   </object>
 
   <!-- ═══════════════════════════════════════════════════════════════════
-       Sidebar navigation rows
-       ═══════════════════════════════════════════════════════════════════ -->
-  <object class="GtkListBoxRow" id="sidebar_row_rip">
-    <child>
-      <object class="GtkBox">
-        <property name="spacing">12</property>
-        <property name="margin-start">12</property>
-        <property name="margin-end">12</property>
-        <property name="margin-top">10</property>
-        <property name="margin-bottom">10</property>
-        <child>
-          <object class="GtkImage">
-            <property name="icon-name">media-optical-dvd</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label">Rip Disc</property>
-            <property name="halign">start</property>
-            <property name="hexpand">true</property>
-          </object>
-        </child>
-      </object>
-    </child>
-  </object>
-
-  <object class="GtkListBoxRow" id="sidebar_row_backup">
-    <child>
-      <object class="GtkBox">
-        <property name="spacing">12</property>
-        <property name="margin-start">12</property>
-        <property name="margin-end">12</property>
-        <property name="margin-top">10</property>
-        <property name="margin-bottom">10</property>
-        <child>
-          <object class="GtkImage">
-            <property name="icon-name">drive-harddisk-symbolic</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label">Backup</property>
-            <property name="halign">start</property>
-            <property name="hexpand">true</property>
-          </object>
-        </child>
-      </object>
-    </child>
-  </object>
-
-  <object class="GtkListBoxRow" id="sidebar_row_logs">
-    <child>
-      <object class="GtkBox">
-        <property name="spacing">12</property>
-        <property name="margin-start">12</property>
-        <property name="margin-end">12</property>
-        <property name="margin-top">10</property>
-        <property name="margin-bottom">10</property>
-        <child>
-          <object class="GtkImage">
-            <property name="icon-name">text-x-script-symbolic</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label">Logs</property>
-            <property name="halign">start</property>
-            <property name="hexpand">true</property>
-          </object>
-        </child>
-      </object>
-    </child>
-  </object>
-
-  <!-- ═══════════════════════════════════════════════════════════════════
        About dialog — all static strings in one place
        ═══════════════════════════════════════════════════════════════════ -->
   <object class="AdwAboutDialog" id="about_dialog">
-    <property name="application-name">Ripper</property>
-    <property name="application-icon">media-optical-dvd</property>
+    <property name="application-name">MakeMKV GTK</property>
+    <property name="application-icon">makemkv-gtk</property>
     <property name="developer-name">Community</property>
     <property name="website">https://github.com/makemkv/gui</property>
     <property name="comments">A GTK4 front-end for MakeMKV on Linux.</property>

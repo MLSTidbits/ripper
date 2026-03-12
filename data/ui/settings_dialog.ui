@@ -93,13 +93,15 @@
               <object class="AdwPreferencesGroup" id="lang_group">
                 <property name="title">Language</property>
                 <child>
-                  <object class="AdwEntryRow" id="iface_lang_row">
+                  <object class="AdwComboRow" id="iface_lang_row">
                     <property name="title">UI Language (app_InterfaceLanguage)</property>
+                    <property name="subtitle">3-letter ISO 639-2 code</property>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwEntryRow" id="pref_lang_row">
+                  <object class="AdwComboRow" id="pref_lang_row">
                     <property name="title">Audio / Subtitle Language (app_PreferredLanguage)</property>
+                    <property name="subtitle">3-letter ISO 639-2 code</property>
                   </object>
                 </child>
               </object>
