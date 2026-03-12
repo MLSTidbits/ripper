@@ -15,4 +15,4 @@ python3 -c "import gi" 2>/dev/null || {
 }
 
 export PYTHONPATH="${SRC}${PYTHONPATH:+:$PYTHONPATH}"
-exec python3 "${SRC}/makemkv-gtk" "$@"
+exec python3 "${SRC}/main.py" "$@"
