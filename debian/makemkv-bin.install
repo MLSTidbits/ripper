@@ -1,0 +1,5 @@
+data/share/appdata.tar usr/share/MakeMKV/
+data/share/blues.jar usr/share/MakeMKV/
+data/share/blues.policy usr/share/MakeMKV/
+
+src/bin/makemkvcon usr/bin/
