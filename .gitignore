@@ -15,7 +15,7 @@ debian/makemkv-bin/
 
 debian/.debhelper/
 
-debian/makemkv-gtk.substvars
+debian/*.substvars
 debian/files
 
 __pycache__/
