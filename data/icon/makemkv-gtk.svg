@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+
+    <!-- Disc radial gradient — silver platter -->
+    <radialGradient id="discFace" cx="42%" cy="38%" r="58%">
+      <stop offset="0%"   stop-color="#eef2f7"/>
+      <stop offset="40%"  stop-color="#c8d3e0"/>
+      <stop offset="75%"  stop-color="#9aaabb"/>
+      <stop offset="100%" stop-color="#6e8494"/>
+    </radialGradient>
+
+    <!-- Rainbow iridescence ring -->
+    <radialGradient id="rainbow" cx="50%" cy="50%" r="50%">
+      <stop offset="30%"  stop-color="#a78bfa" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="#38bdf8" stop-opacity="0.55"/>
+      <stop offset="62%"  stop-color="#34d399" stop-opacity="0.45"/>
+      <stop offset="74%"  stop-color="#fbbf24" stop-opacity="0.45"/>
+      <stop offset="86%"  stop-color="#f87171" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Hub gradient -->
+    <radialGradient id="hubGrad" cx="40%" cy="35%" r="60%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="60%"  stop-color="#d0dae6"/>
+      <stop offset="100%" stop-color="#8fa3b4"/>
+    </radialGradient>
+
+    <!-- Arm gradient -->
+    <linearGradient id="armGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#4a5568"/>
+      <stop offset="100%" stop-color="#2d3748"/>
+    </linearGradient>
+
+    <!-- Read head accent -->
+    <linearGradient id="headGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#63b3ed"/>
+      <stop offset="100%" stop-color="#2b6cb0"/>
+    </linearGradient>
+
+    <!-- Drop shadow filter -->
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#00000044"/>
+    </filter>
+
+    <!-- Subtle gloss overlay -->
+    <linearGradient id="gloss" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="50%"  stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Clip to disc circle -->
+    <clipPath id="discClip">
+      <circle cx="58" cy="64" r="46"/>
+    </clipPath>
+
+  </defs>
+
+  <!-- ── Disc body ───────────────────────────────────────────────────── -->
+  <circle cx="58" cy="64" r="46" fill="url(#discFace)" filter="url(#shadow)"/>
+
+  <!-- Iridescent sheen over the full disc face -->
+  <circle cx="58" cy="64" r="46" fill="url(#rainbow)" clip-path="url(#discClip)"/>
+
+  <!-- Data track rings -->
+  <circle cx="58" cy="64" r="40" fill="none" stroke="#b0bec5" stroke-width="0.4" opacity="0.6"/>
+  <circle cx="58" cy="64" r="35" fill="none" stroke="#b0bec5" stroke-width="0.4" opacity="0.5"/>
+  <circle cx="58" cy="64" r="30" fill="none" stroke="#b0bec5" stroke-width="0.4" opacity="0.4"/>
+  <circle cx="58" cy="64" r="25" fill="none" stroke="#b0bec5" stroke-width="0.3" opacity="0.3"/>
+  <circle cx="58" cy="64" r="20" fill="none" stroke="#b0bec5" stroke-width="0.3" opacity="0.2"/>
+
+  <!-- Hub ring (white plastic collar) -->
+  <circle cx="58" cy="64" r="13" fill="#e8edf2" stroke="#c5cdd6" stroke-width="1"/>
+
+  <!-- Hub centre hole -->
+  <circle cx="58" cy="64" r="7"  fill="url(#hubGrad)" stroke="#8fa3b4" stroke-width="0.8"/>
+  <circle cx="58" cy="64" r="3"  fill="#cfd8e3"/>
+
+  <!-- Gloss highlight arc over top-left of disc -->
+  <ellipse cx="44" cy="45" rx="22" ry="12"
+           fill="url(#gloss)" opacity="0.7"
+           transform="rotate(-20 44 45)"/>
+
+  <!-- ── Tonearm / read head ────────────────────────────────────────── -->
+  <!-- Pivot point at top-right -->
+  <circle cx="100" cy="28" r="5" fill="url(#armGrad)" stroke="#1a202c" stroke-width="1"/>
+
+  <!-- Arm body — tapered rectangle rotated ~-35° sweeping toward disc -->
+  <rect x="97" y="28" width="6" height="52" rx="3"
+        fill="url(#armGrad)" stroke="#1a202c" stroke-width="0.8"
+        transform="rotate(-35 100 28)"/>
+
+  <!-- Read head at arm tip -->
+  <rect x="57" y="21" width="14" height="7" rx="2"
+        fill="url(#headGrad)" stroke="#1a5276" stroke-width="0.8"
+        transform="rotate(-35 64 24)"/>
+
+  <!-- Stylus dot touching disc surface -->
+  <circle cx="62" cy="20" r="2" fill="#1a202c"
+          transform="rotate(-35 64 24)"/>
+
+  <!-- ── Laser beam (subtle) ────────────────────────────────────────── -->
+  <line x1="62" y1="22" x2="58" y2="30"
+        stroke="#63b3ed" stroke-width="1" stroke-linecap="round" opacity="0.55"
+        transform="rotate(-35 64 24)"/>
+
+</svg>

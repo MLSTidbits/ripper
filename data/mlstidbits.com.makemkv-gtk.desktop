@@ -8,7 +8,7 @@ Type=Application
 Name=MakeMKV
 GenericName=Disc Ripper
 Comment=Rip and backup Blu-ray and DVD discs using MakeMKV
-Icon=media-optical-dvd
+Icon=makemkv-gtk
 
 # Full path when installed; use the run.sh wrapper during development
 Exec=makemkv-gui %U
