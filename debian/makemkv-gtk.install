@@ -7,6 +7,8 @@ data/ui/disc_view.ui usr/share/makemkv-gtk/
 
 src/makemkv-gtk usr/bin/
 
+src/main.py usr/lib/makemkv-gtk/
+
 src/core/makemkv_config.py usr/lib/makemkv-gtk/core/
 src/core/makemkv_controller.py usr/lib/makemkv-gtk/core/
 src/core/makemkv_parser.py usr/lib/makemkv-gtk/core/
