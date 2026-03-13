@@ -19,9 +19,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 from core.makemkv_config import MakeMKVConfig
 from core.languages import get_languages, get_system_language_code
-from core.paths import ui_file as _ui_file
-
-_UI_FILE = _ui_file("settings_dialog.ui")
+_UI_FILE = "/usr/share/makemkv-gtk/ui/settings_dialog.ui"
 
 GUI_CONFIG_PATH = os.path.expanduser("~/.config/makemkv-gui/settings.json")
 

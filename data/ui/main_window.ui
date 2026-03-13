@@ -41,7 +41,7 @@
        Window title widget — set_title_widget() called in Python
        ═══════════════════════════════════════════════════════════════════ -->
   <object class="AdwWindowTitle" id="win_title">
-    <property name="title">MakeMKV</property>
+    <property name="title">Reel</property>
     <property name="subtitle"></property>
   </object>
 
@@ -100,8 +100,8 @@
        About dialog — all static strings in one place
        ═══════════════════════════════════════════════════════════════════ -->
   <object class="AdwAboutDialog" id="about_dialog">
-    <property name="application-name">MakeMKV GTK</property>
-    <property name="application-icon">makemkv-gtk</property>
+    <property name="application-name">Reel</property>
+    <property name="application-icon">reel</property>
     <property name="developer-name">Community</property>
     <property name="website">https://github.com/makemkv/gui</property>
     <property name="comments">A GTK4 front-end for MakeMKV on Linux.</property>

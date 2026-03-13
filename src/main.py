@@ -24,7 +24,7 @@ from ui.main_window import MainWindow
 class MakeMKVApp(Adw.Application):
     def __init__(self):
         super().__init__(
-            application_id="io.github.mlstidbits.mkv-ripper",
+            application_id="io.github.mlstidbits.reel",
             flags=Gio.ApplicationFlags.FLAGS_NONE,
         )
         self.connect("activate", self.on_activate)

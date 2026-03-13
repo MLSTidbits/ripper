@@ -14,8 +14,7 @@ from gi.repository import Gtk, Adw, GLib
 from core.makemkv_controller import MakeMKVController
 from core.models import DriveInfo, TitleInfo
 
-from core.paths import ui_file as _ui_file
-_UI_FILE = _ui_file("disc_view.ui")
+_UI_FILE = "/usr/share/makemkv-gtk/ui/disc_view.ui"
 
 MARGIN_H = 24
 MARGIN_V = 16
@@ -284,7 +283,7 @@ class DiscView(Gtk.Box):
                 self._drives_list.append(DriveRow(drive))
         else:
             self._drives_list.append(
-                Adw.ActionRow(title="Insert a DVD or Blu-ray", subtitle="No optical drives detected", activatable=False)
+                Adw.ActionRow(title="No optical drives detected")
             )
             self.clear()
 

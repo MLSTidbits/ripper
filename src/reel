@@ -5,7 +5,7 @@
 # Uncomment the following line to enable debugging output
 # set -xo pipefail
 
-APP_DIR="/usr/lib/makemkv-gtk"
+APP_DIR="/usr/lib/reel"
 PYTHONPATH="${APP_DIR}${PYTHONPATH:+:$PYTHONPATH}"
 
 export PYTHONPATH
