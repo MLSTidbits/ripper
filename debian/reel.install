@@ -1,17 +1,17 @@
-data/reel.desktop           usr/share/applications/
+data/com.MLSTidbits.Reel.desktop usr/share/applications/
 
-data/icons/16x16/reel.png   usr/share/icons/hicolor/16x16/apps/
-data/icons/22x22/reel.png   usr/share/icons/hicolor/22x22/apps/
-data/icons/32x32/reel.png   usr/share/icons/hicolor/32x32/apps/
-data/icons/64x64/reel.png   usr/share/icons/hicolor/64x64/apps/
-data/icons/128x128/reel.png usr/share/icons/hicolor/128x128/apps/
-data/icons/256x256/reel.png usr/share/icons/hicolor/256x256/apps/
+data/icons/16x16/reel.png        usr/share/icons/hicolor/16x16/apps/
+data/icons/22x22/reel.png        usr/share/icons/hicolor/22x22/apps/
+data/icons/32x32/reel.png        usr/share/icons/hicolor/32x32/apps/
+data/icons/64x64/reel.png        usr/share/icons/hicolor/64x64/apps/
+data/icons/128x128/reel.png      usr/share/icons/hicolor/128x128/apps/
+data/icons/256x256/reel.png      usr/share/icons/hicolor/256x256/apps/
 
-data/ui                     usr/share/reel/
-doc/version                 usr/share/doc/reel/
+data/ui                          usr/share/reel/
+doc/version                      usr/share/doc/reel/
 
-src/main.py                 usr/lib/reel/
-src/core/*.py               usr/lib/reel/core/
-src/ui/*.py                 usr/lib/reel/ui/
+src/main.py                      usr/lib/reel/
+src/core/*.py                    usr/lib/reel/core/
+src/ui/*.py                      usr/lib/reel/ui/
 
-src/reel                    usr/bin/
+src/reel                         usr/bin/
