@@ -1,12 +1,13 @@
 [Desktop Entry]
 Version=1.0
+Type=Application
 Name=Reel
 GenericName=Disc Ripper
 Comment=Rip and backup Blu-ray and DVD discs using MakeMKV
-Exec=reel
 Icon=reel
+Exec=/usr/bin/reel
 Terminal=false
-Type=Application
-Categories=AudioVideo;Video;
-Keywords=DVD;Blu-ray;MKV;Converter;Streamer;
+StartupNotify=true
+Categories=AudioVideo;Video;GTK;
+Keywords=makemkv;blu-ray;bluray;dvd;rip;backup;mkv;disc;
 MimeType=x-content/video-bluray;x-content/video-dvd;
