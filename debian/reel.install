@@ -1,0 +1,11 @@
+data/makemkv.desktop   usr/share/applications/
+data/icons/* usr/share/icons/hicolor/
+
+data/ui                    usr/share/makemkv-gtk/
+doc/version                usr/share/doc/makemkv-gtk/
+
+src/main.py                usr/lib/makemkv-gtk/
+src/core/*.py              usr/lib/makemkv-gtk/core/
+src/ui/*.py                usr/lib/makemkv-gtk/ui/
+
+src/makemkv-gtk            usr/bin/
