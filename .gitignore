@@ -10,7 +10,7 @@ changelog
 version
 md5sums
 
-debian/makemkv-gtk/
+debian/reel/
 debian/makemkv-bin/
 
 debian/.debhelper/
