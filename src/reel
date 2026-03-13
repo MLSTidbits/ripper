@@ -10,4 +10,4 @@ PYTHONPATH="${APP_DIR}${PYTHONPATH:+:$PYTHONPATH}"
 
 export PYTHONPATH
 
-exec python3 "${APP_DIR}/makemkv.py" "$@"
+exec python3 "${APP_DIR}/main.py" "$@"
