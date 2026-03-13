@@ -1,4 +1,4 @@
-# Ripper
+# Reel — MakeMKV GUI for Linux
 
 A full-featured GTK4 + libadwaita front-end for [MakeMKV](https://www.makemkv.com/) on Linux.
 Built with Python 3.11+ and PyGObject, following the GNOME Human Interface Guidelines.
