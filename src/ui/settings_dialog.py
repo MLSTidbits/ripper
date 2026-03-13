@@ -19,9 +19,9 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 from core.makemkv_config import MakeMKVConfig
 from core.languages import get_languages, get_system_language_code
-_UI_FILE = "/usr/share/makemkv-gtk/ui/settings_dialog.ui"
+_UI_FILE = "/usr/share/reel/ui/settings_dialog.ui"
 
-GUI_CONFIG_PATH = os.path.expanduser("~/.config/makemkv-gui/settings.json")
+GUI_CONFIG_PATH = os.path.expanduser("~/.config/reel/settings.json")
 
 # ── app_DestinationType ──────────────────────────────────────────────── #
 DEST_TYPE_OPTIONS = ["None", "Auto", "Semi-Auto", "Custom"]

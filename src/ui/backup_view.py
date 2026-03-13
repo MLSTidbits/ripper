@@ -14,7 +14,7 @@ from gi.repository import Gtk, Adw, GLib
 from core.makemkv_controller import MakeMKVController
 from core.models import BackupJob
 
-_UI_FILE = "/usr/share/makemkv-gtk/ui/backup_view.ui"
+_UI_FILE = "/usr/share/reel/ui/backup_view.ui"
 
 
 class BackupJobRow(Adw.ActionRow):

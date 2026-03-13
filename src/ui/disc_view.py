@@ -14,7 +14,7 @@ from gi.repository import Gtk, Adw, GLib
 from core.makemkv_controller import MakeMKVController
 from core.models import DriveInfo, TitleInfo
 
-_UI_FILE = "/usr/share/makemkv-gtk/ui/disc_view.ui"
+_UI_FILE = "/usr/share/reel/ui/disc_view.ui"
 
 MARGIN_H = 24
 MARGIN_V = 16

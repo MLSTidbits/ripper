@@ -14,7 +14,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw, GLib, Pango
 from core.makemkv_controller import MakeMKVController
 
-_UI_FILE = "/usr/share/makemkv-gtk/ui/log_view.ui"
+_UI_FILE = "/usr/share/reel/ui/log_view.ui"
 
 # Maps controller log level → (CSS tag name, line prefix)
 _LEVEL_STYLE = {

@@ -19,7 +19,7 @@ from core.version import get_version
 from core.makemkv_controller import MakeMKVController
 
 # Resolve the .ui path relative to this file so it works regardless of cwd
-_UI_FILE = "/usr/share/makemkv-gtk/ui/main_window.ui"
+_UI_FILE = "/usr/share/reel/ui/main_window.ui"
 
 
 class MainWindow(Adw.ApplicationWindow):
