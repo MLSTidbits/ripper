@@ -2,7 +2,9 @@ Source: reel
 Section: video
 Priority: optional
 Maintainer: MLS Tidbits <contact@mlstidbits.com>
-Build-Depends: debhelper-compat (= 13), autotools-dev
+Build-Depends:
+ debhelper-compat (= 13), autotools-dev, libexpat1-dev, libavcodec-dev, zlib1g-dev,
+ libavcodec-dev, boa, pandoc, dh-make, git
 Standards-Version: 4.6.0
 Homepage: https://mlstidbits.com
 Vcs-Browser: https://github.com/MLSTidbits/rippr
@@ -11,15 +13,52 @@ Rules-Requires-Root: no
 
 Package: reel
 Architecture: amd64
+Depends: libmakemkv , makemkv-bin, reel-common
+Description: DVD and Blu-ray ripping tool.
+ Reel is a DVD and Blu-ray ripping tool that provides a user-friendly interface for
+ managing the ripping process. It uses makemkvcon to perform the actual ripping tasks,
+ and provides features such as progress tracking and error handling.
+
+Package: reel-common
+Architecture: all
+Depends: reel
+Description: Common files for reel.
+ This package contains common files for the reel application, such as application icons
+ and desktop files and documentation. These files are shared between the reel, reel-gtk,
+ and reel-qt packages.
+
+Package: reel-gtk
+Architecture: amd64
 Depends:
- makemkv-bin, python3, python3-gi, python3-gi-cairo, gir1.2-gtk-4.0, gir1.2-adw-1
+ makemkv-bin, python3, python3-gi, python3-gi-cairo, gir1.2-gtk-4.0, gir1.2-adw-1,
+ reel-common, reel
 Description: GTK Frontend for makemkvcon written in Python.
  MakeMKV-GTK uses makemkvcon to rip DVDs and Blu-rays, and provides a user-friendly
  interface to manage the ripping process.
 
 Package: makemkv-bin
 Architecture: amd64
-Suggests: reel, ffmpeg (>= 6.0)
+Suggests: ffmpeg (>= 6.0), makemkv-bin
 Description: MakeMKV command-line tools.
  This package provides the command-line tools for MakeMKV, which are used by
  the reel frontend to perform DVD and Blu-ray ripping tasks.
+
+Package: libmakemkv
+Architecture: amd64
+Depends: makemkv-bin
+Description: Shared library for MakeMKV.
+ This package provides the shared library for MakeMKV, which is used by the
+ reel frontend to perform DVD and Blu-ray ripping tasks.
+
+Package: mmccextr
+Architecture: amd64
+Depends: makemkv-bin
+Description: Closed Caption extractor for MakeMKV.
+ This package provides a closed caption extractor for MakeMKV.
+
+Package: mmgplsrv
+Architecture: amd64
+Depends: makemkv-bin
+Description: MakeMKV GPL Server used for decrypting DVDs by MakeMKV CLI.
+ This package provides the MakeMKV GPL Server, which is used for decrypting DVDs by
+ the MakeMKV command-line interface (CLI).
