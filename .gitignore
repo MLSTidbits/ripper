@@ -16,7 +16,9 @@ debian/reel-gtk/
 debian/reel-qt/
 debian/libmakemkv/
 debian/makemkv-bin/
-makemkv/out/
+debian/mmccextr/
+debian/mmgplsrv/
+out/
 makemkv/tmp/
 
 debian/.debhelper/
@@ -26,4 +28,4 @@ debian/files
 
 __pycache__/
 
-install.sh
+build-stamp
