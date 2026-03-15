@@ -38,7 +38,7 @@ Description: GTK Frontend for makemkvcon written in Python.
 
 Package: makemkv-bin
 Architecture: amd64
-Suggests: ffmpeg (>= 6.0), makemkv-bin, libmakemkv, mmccextr, mmgplsrv
+Suggests: ffmpeg (>= 6.0), libmakemkv, mmccextr, mmgplsrv
 Description: MakeMKV command-line tools.
  This package provides the command-line tools for MakeMKV, which are used by
  the reel frontend to perform DVD and Blu-ray ripping tasks.
