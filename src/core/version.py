@@ -11,7 +11,7 @@ Development    : <project>/doc/version
 def get_version() -> str:
     """Return the version string, e.g. '0.1.0'."""
     try:
-        with open("/usr/share/doc/reel/version") as f:
+        with open("/usr/share/doc/makemkv-gtk/version") as f:
             return f.read().strip()
     except OSError:
         return "unknown"
