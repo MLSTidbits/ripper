@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Reel — Qt6 frontend for MakeMKV
+Reel — Qt5 frontend for MakeMKV
 Entry point.
 """
 
@@ -9,8 +9,8 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtGui import QIcon
 from ui.main_window import MainWindow
 
 APP_ID = "com.MLSTidbits.Reel"

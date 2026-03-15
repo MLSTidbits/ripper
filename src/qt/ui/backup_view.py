@@ -3,13 +3,13 @@ BackupView — Disc backup job setup and history.
 """
 
 import os
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QGroupBox, QCheckBox, QLineEdit, QFileDialog, QScrollArea,
     QFrame, QTableWidget, QTableWidgetItem, QHeaderView,
     QProgressBar, QAbstractItemView, QComboBox,
 )
-from PyQt6.QtCore import Qt, pyqtSlot
+from PyQt5.QtCore import Qt, pyqtSlot
 
 from core.makemkv_controller import MakeMKVController
 from core.models import BackupJob
@@ -31,8 +31,8 @@ class BackupView(QWidget):
 
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-        scroll.setFrameShape(QFrame.Shape.NoFrame)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll.setFrameShape(QFrame.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         root.addWidget(scroll)
 
         content = QWidget()
@@ -89,21 +89,21 @@ class BackupView(QWidget):
         self._history_table.setHorizontalHeaderLabels(
             ["Disc", "Destination", "Status", "Date"])
         self._history_table.horizontalHeader().setSectionResizeMode(
-            0, QHeaderView.ResizeMode.Stretch)
+            0, QHeaderView.Stretch)
         self._history_table.horizontalHeader().setSectionResizeMode(
-            1, QHeaderView.ResizeMode.Stretch)
+            1, QHeaderView.Stretch)
         self._history_table.setEditTriggers(
-            QAbstractItemView.EditTrigger.NoEditTriggers)
+            QAbstractItemView.NoEditTriggers)
         self._history_table.setAlternatingRowColors(True)
         self._history_table.setSelectionBehavior(
-            QAbstractItemView.SelectionBehavior.SelectRows)
+            QAbstractItemView.SelectRows)
         hist_layout.addWidget(self._history_table)
         layout.addWidget(hist_box)
         layout.addStretch()
 
         # ── Footer ── #
         footer = QFrame()
-        footer.setFrameShape(QFrame.Shape.StyledPanel)
+        footer.setFrameShape(QFrame.StyledPanel)
         footer_layout = QHBoxLayout(footer)
         footer_layout.setContentsMargins(12, 6, 12, 6)
         footer_layout.addStretch()

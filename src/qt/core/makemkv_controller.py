@@ -22,7 +22,7 @@ import subprocess
 import threading
 from typing import Optional
 
-from PyQt6.QtCore import QObject, pyqtSignal, QMetaObject, Qt
+from PyQt5.QtCore import QObject, pyqtSignal, QMetaObject, Qt
 
 from core.models import DriveInfo, TitleInfo, BackupJob, RipJob
 from core.makemkv_parser import MakeMKVParser
@@ -68,7 +68,7 @@ class MakeMKVController(QObject):
         QMetaObject.invokeMethod(
             self,
             "_emit_slot",
-            Qt.ConnectionType.QueuedConnection,
+            Qt.QueuedConnection,
             signal_name,
             *args,
         )
@@ -81,13 +81,13 @@ class MakeMKVController(QObject):
         QMetaObject.invokeMethod(
             self,
             lambda: signal.emit(*args),
-            Qt.ConnectionType.QueuedConnection,
+            Qt.QueuedConnection,
         )
 
     def _queue(self, fn):
         """Run fn() on the main thread from any thread."""
         QMetaObject.invokeMethod(
-            self, fn, Qt.ConnectionType.QueuedConnection
+            self, fn, Qt.QueuedConnection
         )
 
     # ------------------------------------------------------------------ #

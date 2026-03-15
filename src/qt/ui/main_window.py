@@ -3,13 +3,14 @@ MainWindow — QMainWindow with horizontal tab navigation.
 """
 
 import os
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
+    QAction, QKeySequence,
     QMainWindow, QWidget, QTabWidget, QToolBar,
     QMessageBox, QStatusBar, QLabel, QMenu,
     QPushButton, QHBoxLayout,
 )
-from PyQt6.QtGui import QIcon, QAction, QKeySequence
-from PyQt6.QtCore import Qt, QSize, pyqtSlot
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt, QSize, pyqtSlot
 
 from core.makemkv_controller import MakeMKVController
 from core.version import get_version
@@ -62,7 +63,7 @@ class MainWindow(QMainWindow):
 
     def _build_ui(self):
         self._tabs = QTabWidget()
-        self._tabs.setTabPosition(QTabWidget.TabPosition.North)
+        self._tabs.setTabPosition(QTabWidget.North)
         self._tabs.setDocumentMode(True)
         self.setCentralWidget(self._tabs)
 
@@ -118,9 +119,9 @@ class MainWindow(QMainWindow):
             spacer.sizePolicy().horizontalPolicy(),
             spacer.sizePolicy().verticalPolicy(),
         )
-        from PyQt6.QtWidgets import QSizePolicy
+        from PyQt5.QtWidgets import QSizePolicy
         spacer.setSizePolicy(
-            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+            QSizePolicy.Expanding, QSizePolicy.Preferred)
         tb.addWidget(spacer)
 
         # Hamburger menu
@@ -200,11 +201,11 @@ class MainWindow(QMainWindow):
         QMessageBox.about(
             self, "About Reel",
             f"<b>Reel</b> v{get_version()}<br><br>"
-            "A Qt6 front-end for MakeMKV on Linux.<br><br>"
+            "A Qt5 front-end for MakeMKV on Linux.<br><br>"
             "Requirements:<br>"
             "• MakeMKV (makemkvcon binary)<br>"
             "• Python 3.11+<br>"
-            "• PyQt6",
+            "• PyQt5",
         )
 
     @pyqtSlot(list)

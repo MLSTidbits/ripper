@@ -2,12 +2,12 @@
 LogView — Colour-coded makemkvcon output log.
 """
 
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPlainTextEdit,
     QPushButton, QLineEdit, QFrame, QFileDialog,
 )
-from PyQt6.QtGui import QTextCharFormat, QColor, QFont, QTextCursor
-from PyQt6.QtCore import Qt, pyqtSlot
+from PyQt5.QtGui import QTextCharFormat, QColor, QFont, QTextCursor
+from PyQt5.QtCore import Qt, pyqtSlot
 
 from core.makemkv_controller import MakeMKVController
 
@@ -84,9 +84,9 @@ class LogView(QWidget):
         if color:
             fmt.setForeground(QColor(color))
         if level in ("ERROR", "WARNING"):
-            fmt.setFontWeight(QFont.Weight.Bold)
+            fmt.setFontWeight(QFont.Bold)
         cursor = self._log.textCursor()
-        cursor.movePosition(QTextCursor.MoveOperation.End)
+        cursor.movePosition(QTextCursor.End)
         cursor.insertText(f"[{level}] {text}\n", fmt)
         self._log.setTextCursor(cursor)
         self._log.ensureCursorVisible()

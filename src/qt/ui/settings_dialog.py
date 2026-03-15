@@ -6,13 +6,13 @@ and ~/.config/reel/settings.json for GUI-only prefs.
 
 import json
 import os
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QTabWidget, QWidget,
     QLabel, QLineEdit, QPushButton, QCheckBox, QComboBox,
     QGroupBox, QFormLayout, QFileDialog, QDialogButtonBox,
     QSpinBox, QScrollArea, QFrame,
 )
-from PyQt6.QtCore import Qt
+from PyQt5.QtCore import Qt
 
 from core.makemkv_config import MakeMKVConfig
 from core.languages import get_languages, get_system_language_code
@@ -64,8 +64,8 @@ class SettingsDialog(QDialog):
         self._tabs.addTab(self._make_app_tab(),      "App")
 
         buttons = QDialogButtonBox(
-            QDialogButtonBox.StandardButton.Cancel |
-            QDialogButtonBox.StandardButton.Save
+            QDialogButtonBox.Cancel |
+            QDialogButtonBox.Save
         )
         buttons.accepted.connect(self._on_save)
         buttons.rejected.connect(self.reject)
@@ -76,7 +76,7 @@ class SettingsDialog(QDialog):
     def _scrolled(self, widget: QWidget) -> QScrollArea:
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setFrameShape(QFrame.NoFrame)
         scroll.setWidget(widget)
         return scroll
 

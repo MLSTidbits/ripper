@@ -3,14 +3,14 @@ DiscView — Drive picker, title list, and rip controls.
 """
 
 import os
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QListWidget,
     QListWidgetItem, QPushButton, QProgressBar, QGroupBox,
     QScrollArea, QCheckBox, QLineEdit, QSizePolicy, QFrame,
     QTreeWidget, QTreeWidgetItem, QAbstractItemView, QHeaderView,
 )
-from PyQt6.QtCore import Qt, pyqtSlot
-from PyQt6.QtGui import QIcon, QColor
+from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtGui import QIcon, QColor
 
 from core.makemkv_controller import MakeMKVController
 from core.models import DriveInfo, TitleInfo
@@ -39,8 +39,8 @@ class DiscView(QWidget):
         # Scrollable content area
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-        scroll.setFrameShape(QFrame.Shape.NoFrame)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll.setFrameShape(QFrame.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         root.addWidget(scroll)
 
         content = QWidget()
@@ -85,13 +85,13 @@ class DiscView(QWidget):
         self._titles_tree = QTreeWidget()
         self._titles_tree.setColumnCount(5)
         self._titles_tree.setHeaderLabels(["", "Title", "Duration", "Size", "Chapters"])
-        self._titles_tree.header().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
-        self._titles_tree.header().setSectionResizeMode(0, QHeaderView.ResizeMode.Fixed)
+        self._titles_tree.header().setSectionResizeMode(1, QHeaderView.Stretch)
+        self._titles_tree.header().setSectionResizeMode(0, QHeaderView.Fixed)
         self._titles_tree.header().resizeSection(0, 28)
         self._titles_tree.setIndentation(0)
         self._titles_tree.setRootIsDecorated(False)
         self._titles_tree.setAlternatingRowColors(True)
-        self._titles_tree.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked)
+        self._titles_tree.setEditTriggers(QAbstractItemView.DoubleClicked)
         titles_layout.addWidget(self._titles_tree)
         layout.addWidget(titles_box)
 
@@ -116,7 +116,7 @@ class DiscView(QWidget):
 
         # ── Footer action bar ── #
         footer = QFrame()
-        footer.setFrameShape(QFrame.Shape.StyledPanel)
+        footer.setFrameShape(QFrame.StyledPanel)
         footer_layout = QHBoxLayout(footer)
         footer_layout.setContentsMargins(12, 6, 12, 6)
         footer_layout.addStretch()
@@ -163,14 +163,14 @@ class DiscView(QWidget):
                 else:
                     text += f"  [{drive.device_path}]"
                 item = QListWidgetItem(text)
-                item.setData(Qt.ItemDataRole.UserRole, drive)
+                item.setData(Qt.UserRole, drive)
                 self._drives_list.addItem(item)
         else:
             self._drives_list.addItem("No optical drives detected")
 
     @pyqtSlot(QListWidgetItem)
     def _on_drive_activated(self, item: QListWidgetItem):
-        drive: DriveInfo = item.data(Qt.ItemDataRole.UserRole)
+        drive: DriveInfo = item.data(Qt.UserRole)
         if drive and drive.has_disc:
             self._disc_info_label.setText(
                 f"Loading disc {drive.drive_index}…")
@@ -185,14 +185,14 @@ class DiscView(QWidget):
             f"Disc: {disc_name}  ·  {len(titles)} titles found")
         for title in titles:
             item = QTreeWidgetItem()
-            item.setData(0, Qt.ItemDataRole.UserRole, title)
-            item.setCheckState(0, Qt.CheckState.Checked if title.selected
-                               else Qt.CheckState.Unchecked)
+            item.setData(0, Qt.UserRole, title)
+            item.setCheckState(0, Qt.Checked if title.selected
+                               else Qt.Unchecked)
             item.setText(1, title.name)
             item.setText(2, title.duration)
             item.setText(3, title.size_str)
             item.setText(4, str(title.chapter_count))
-            item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)
+            item.setFlags(item.flags() | Qt.ItemIsEditable)
             self._titles_tree.addTopLevelItem(item)
         self._titles_tree.itemChanged.connect(self._on_title_item_changed)
         self._rip_btn.setEnabled(bool(titles))
@@ -200,11 +200,11 @@ class DiscView(QWidget):
 
     @pyqtSlot(QTreeWidgetItem, int)
     def _on_title_item_changed(self, item: QTreeWidgetItem, col: int):
-        title: TitleInfo = item.data(0, Qt.ItemDataRole.UserRole)
+        title: TitleInfo = item.data(0, Qt.UserRole)
         if not title:
             return
         if col == 0:
-            title.selected = item.checkState(0) == Qt.CheckState.Checked
+            title.selected = item.checkState(0) == Qt.Checked
             self._refresh_select_all_btn()
         elif col == 1:
             title.output_file_name = item.text(1)
@@ -212,7 +212,7 @@ class DiscView(QWidget):
     def _all_selected(self) -> bool:
         for i in range(self._titles_tree.topLevelItemCount()):
             item = self._titles_tree.topLevelItem(i)
-            if item.checkState(0) != Qt.CheckState.Checked:
+            if item.checkState(0) != Qt.Checked:
                 return False
         return self._titles_tree.topLevelItemCount() > 0
 
@@ -223,7 +223,7 @@ class DiscView(QWidget):
 
     def _on_select_all(self):
         deselect = self._all_selected()
-        state = Qt.CheckState.Unchecked if deselect else Qt.CheckState.Checked
+        state = Qt.Unchecked if deselect else Qt.Checked
         for i in range(self._titles_tree.topLevelItemCount()):
             item = self._titles_tree.topLevelItem(i)
             item.setCheckState(0, state)
