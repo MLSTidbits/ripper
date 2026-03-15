@@ -1,0 +1,6 @@
+data/ui                          usr/share/reel/
+doc/version                      usr/share/doc/reel/
+
+src/qt/main.py                      usr/lib/reel/
+src/qt/core/*.py                    usr/lib/reel/core/
+src/qt/ui/*.py                      usr/lib/reel/ui/
