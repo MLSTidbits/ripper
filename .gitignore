@@ -11,7 +11,13 @@ version
 md5sums
 
 debian/reel/
+debian/reel-common/
+debian/reel-gtk/
+debian/reel-qt/
+debian/libmakemkv/
 debian/makemkv-bin/
+makemkv/out/
+makemkv/tmp/
 
 debian/.debhelper/
 
