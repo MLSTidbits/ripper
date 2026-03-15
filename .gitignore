@@ -10,6 +10,8 @@ changelog
 version
 md5sums
 
+src/makemkv/tmp/
+
 debian/reel/
 debian/reel-common/
 debian/reel-gtk/
