@@ -5,6 +5,9 @@ set -e
 EULA_URL="https://raw.githubusercontent.com/MLSTidbits/reel/refs/heads/main/src/makemkv/eula.license"
 TMP_EULA="/tmp/makemkv_eula.license"
 
+ROWS=$(tput lines)
+COLS=$(tput cols)
+
 curl -sSL "$EULA_URL" -o "$TMP_EULA"
 
 case "$1" in
@@ -22,12 +25,11 @@ case "$1" in
                     rm -f "$TMP_EULA"
                     exit 1
                 fi
-                whiptail --title "MakeMKV EULA" --textbox --scrolltext "$TMP_EULA" 20 80
+                whiptail --title "MakeMKV EULA" --textbox --scrolltext "$TMP_EULA" "$ROWS" "$COLS"
                 rm -f "$TMP_EULA"
 
                 if ! whiptail --title "MakeMKV EULA" --yesno "Do you accept the MakeMKV EULA?" 10 60 ; then
                     echo "EULA not accepted, aborting installation"
-                    exit 1
                 fi
 
             fi
