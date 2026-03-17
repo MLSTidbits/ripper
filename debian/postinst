@@ -10,7 +10,7 @@ curl -sSL "$EULA_URL" -o "$TMP_EULA"
 case "$1" in
     configure|upgrade                            )
         if [ "$1" = "configure" ]; then
-            if [ -f /usr/share/doc/makemkv-bin/eula.license ] ; then
+            if [ -f /usr/share/doc/makemkv-bin/eula.license.gz ] ; then
                 echo "EULA already accepted, skipping"
             else
                 if command -v curl >/dev/null 2>&1 ; then
