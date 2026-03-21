@@ -127,6 +127,7 @@ class DiscView(Gtk.Box):
     def __init__(self, controller: MakeMKVController):
         super().__init__(orientation=Gtk.Orientation.VERTICAL)
         self.controller = controller
+        self._ripping = False
         self._load_ui()
         self._build_layout()
         self._connect_signals()
@@ -287,13 +288,15 @@ class DiscView(Gtk.Box):
         if drives:
             for drive in drives:
                 self._drives_list.append(DriveRow(drive))
-            # Auto-rip: load the first drive that has a disc
+            # Auto-rip: load the first drive that has a disc inserted
             if self._auto_rip_enabled() and not self._ripping:
-                first = drives[0]
-                self._disc_info_bar.set_title(
-                    f"Auto-rip: loading disc {first.drive_index}…"
-                )
-                self.controller.load_disc(first.drive_index)
+                disc_drives = [d for d in drives if d.has_disc]
+                if disc_drives:
+                    first = disc_drives[0]
+                    self._disc_info_bar.set_title(
+                        f"Auto-rip: loading disc {first.drive_index}…"
+                    )
+                    self.controller.load_disc(first.drive_index)
         else:
             self._drives_list.append(
                 Adw.ActionRow(title="No optical drives detected")
@@ -385,6 +388,7 @@ class DiscView(Gtk.Box):
 
     def _set_ripping(self, ripping: bool):
         """Toggle the footer button between Start Ripping and Cancel Ripping."""
+        self._ripping = ripping
         btn = self._rip_btn
         # Disconnect whichever handler is currently active
         for attr in ("_rip_handler_id", "_cancel_handler_id"):

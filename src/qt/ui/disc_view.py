@@ -171,12 +171,14 @@ class DiscView(QWidget):
                 item = QListWidgetItem(text)
                 item.setData(Qt.UserRole, drive)
                 self._drives_list.addItem(item)
-            # Auto-rip: load the first drive with a disc
+            # Auto-rip: load the first drive that has a disc inserted
             if self._auto_rip_enabled() and not self._ripping:
-                first = drives[0]
-                self._disc_info_label.setText(
-                    f"Auto-rip: loading disc {first.drive_index}…")
-                self.controller.load_disc(first.drive_index)
+                disc_drives = [d for d in drives if d.has_disc]
+                if disc_drives:
+                    first = disc_drives[0]
+                    self._disc_info_label.setText(
+                        f"Auto-rip: loading disc {first.drive_index}…")
+                    self.controller.load_disc(first.drive_index)
         else:
             self._drives_list.addItem("No optical drives detected")
 
