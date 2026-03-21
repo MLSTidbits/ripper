@@ -216,18 +216,26 @@ class SettingsDialog:
 
         # Build language dropdowns from system ISO 639-2 data
         self._lang_list = get_languages()   # [(display_name, code), ...]
-        lang_model = Gtk.StringList()
+
+        # Interface language — no unset option, always has a value
+        iface_model = Gtk.StringList()
         for display_name, _ in self._lang_list:
-            lang_model.append(display_name)
-        # Both rows share the same model (read-only StringList is safe to reuse)
-        self._iface_lang_row.set_model(lang_model)
-        self._pref_lang_row.set_model(lang_model)
+            iface_model.append(display_name)
+        self._iface_lang_row.set_model(iface_model)
+
+        # Audio/subtitle language — first entry is "Not set" which removes
+        # the key from settings.conf entirely
+        pref_model = Gtk.StringList()
+        pref_model.append("None")
+        for display_name, _ in self._lang_list:
+            pref_model.append(display_name)
+        self._pref_lang_row.set_model(pref_model)
 
         sys_code = get_system_language_code()
         iface_code = self._mkv.get_str("app_InterfaceLanguage", sys_code)
-        pref_code  = self._mkv.get_str("app_PreferredLanguage",  sys_code)
-        self._iface_lang_row.set_selected(self._lang_index(iface_code, sys_code))
-        self._pref_lang_row.set_selected(self._lang_index(pref_code,  sys_code))
+        pref_code  = self._mkv.get("app_PreferredLanguage")  # None if key absent
+        self._iface_lang_row.set_selected(self._lang_index(iface_code, sys_code, offset=0))
+        self._pref_lang_row.set_selected(self._lang_index(pref_code or "", "", offset=1))
         self._proxy_row.set_text(self._mkv.get_str("app_Proxy", ""))
         self._expert_row.set_active(self._mkv.get_bool("app_ExpertMode", False))
         self._profile_row.set_selected(
@@ -298,21 +306,37 @@ class SettingsDialog:
     #  Helper widgets                                                      #
     # ------------------------------------------------------------------ #
 
-    def _lang_index(self, code: str, fallback: str) -> int:
-        """Return the combo index for an ISO 639-2 code, or fallback code index."""
+    def _lang_index(self, code: str, fallback: str, offset: int = 0) -> int:
+        """
+        Return the combo index for an ISO 639-2 code.
+        offset=1 for the pref row which has a leading '— Not set —' entry.
+        Returns 0 when code is empty (selects '— Not set —' for pref row).
+        """
+        if not code:
+            return 0
         code = code.strip().lower()
         for i, (_, c) in enumerate(self._lang_list):
             if c == code:
-                return i
+                return i + offset
+        if not fallback:
+            return 0
         fallback = fallback.strip().lower()
         for i, (_, c) in enumerate(self._lang_list):
             if c == fallback:
-                return i
+                return i + offset
         return 0
 
-    def _lang_code(self, row) -> str:
-        """Return the ISO 639-2 code for the currently selected combo index."""
+    def _lang_code(self, row, has_unset: bool = False) -> str:
+        """
+        Return the ISO 639-2 code for the selected index.
+        has_unset=True means the model has a leading '— Not set —' entry
+        at index 0; returns "" in that case so the caller can remove the key.
+        """
         idx = row.get_selected()
+        if has_unset:
+            if idx == 0:
+                return ""   # not set — caller should remove the key
+            idx -= 1        # adjust for the leading entry
         if 0 <= idx < len(self._lang_list):
             return self._lang_list[idx][1]
         return "eng"
@@ -377,7 +401,11 @@ class SettingsDialog:
         # ── settings.conf ──
         self._mkv.set_str("app_Key",               self._key_row.get_text())
         self._mkv.set_str("app_InterfaceLanguage", self._lang_code(self._iface_lang_row))
-        self._mkv.set_str("app_PreferredLanguage", self._lang_code(self._pref_lang_row))
+        pref_lang = self._lang_code(self._pref_lang_row, has_unset=True)
+        if pref_lang:
+            self._mkv.set_str("app_PreferredLanguage", pref_lang)
+        else:
+            self._mkv.remove("app_PreferredLanguage")
         self._mkv.set_str("app_Proxy",             self._proxy_row.get_text())
         self._mkv.set_bool("app_ExpertMode",        self._expert_row.get_active())
 

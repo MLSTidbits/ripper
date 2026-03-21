@@ -90,8 +90,13 @@ class SettingsDialog(QDialog):
         form = QFormLayout(lang_box)
         self._iface_lang = QComboBox()
         self._pref_lang  = QComboBox()
+        # Interface language — always has a value
         for display, code in self._languages:
             self._iface_lang.addItem(display, userData=code)
+
+        # Audio/subtitle language — first entry is unset (removes key)
+        self._pref_lang.addItem("None", userData="")
+        for display, code in self._languages:
             self._pref_lang.addItem(display, userData=code)
         form.addRow("Interface language:", self._iface_lang)
         form.addRow("Audio/subtitle language:", self._pref_lang)
@@ -236,9 +241,10 @@ class SettingsDialog(QDialog):
         self._iface_lang.setCurrentIndex(
             self._lang_index(self._iface_lang, iface))
 
-        pref = self._config.get_str("app_PreferredLanguage", sys_lang)
+        # None when key is absent — selects '— Not set —' at index 0
+        pref = self._config.get("app_PreferredLanguage")  # None if missing
         self._pref_lang.setCurrentIndex(
-            self._lang_index(self._pref_lang, pref))
+            0 if not pref else self._lang_index(self._pref_lang, pref))
 
         self._key_edit.setText(self._config.get_str("app_Key", ""))
         self._dest_edit.setText(
@@ -276,8 +282,11 @@ class SettingsDialog(QDialog):
     def _on_save(self):
         self._config.set_str("app_InterfaceLanguage",
                               self._iface_lang.currentData())
-        self._config.set_str("app_PreferredLanguage",
-                              self._pref_lang.currentData())
+        pref_lang = self._pref_lang.currentData()
+        if pref_lang:
+            self._config.set_str("app_PreferredLanguage", pref_lang)
+        else:
+            self._config.remove("app_PreferredLanguage")
         self._config.set_str("app_Key", self._key_edit.text().strip())
         dest = self._dest_edit.text().strip()
         self._config.set_str("app_DestinationDir", dest)
