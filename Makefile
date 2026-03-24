@@ -29,15 +29,11 @@ QT_INSTALL =
 
 export CFLAGS CXXFLAGS LDFLAGS DESTDIR INSTALL OBJCOPY LD
 
-.PHONY: all clean install rebuild
+.PHONY: all clean install rebuild _build
 
-all:
-	@rm -rf out
-	$(MAKE) -C src/makemkv all
-	@mv -f src/makemkv/out ./
+all: _build
 
 clean:
-	$(MAKE) -C src/makemkv clean
 	@rm -rvf out
 
 install: out/libdriveio.so.0 out/libmakemkv.so.1 out/libmmbd.so.0 out/mmccextr out/mmgplsrv out/makemkvcon
@@ -65,8 +61,19 @@ endif
 
 	$(INSTALL) -D -m 644 data/ui/* $(DESTDIR)$(PREFIX)/share/reel/ui/
 
-rebuild:
-	$(MAKE) -C src/makemkv clean
-	$(MAKE) -C src/makemkv all
+_build:
+	@mkdir -p _build
+	@echo "Building REEL $(VERSION) in _build/"
+	@cp -r src/* _build/
 
+# Copy documentation files to the build directory
+	@echo "Copying documentation files to _build/doc/"
+	@cp -r doc _build/
+	@cp CODE_OF_CONDUCT.md _build/doc/
+	@cp COPYING _build/doc/
+	@cp README.md _build/doc/
+	@cp CONTRIBUTING.md _build/doc/
 
+# Copy data files to the build directory
+	@echo "Copying data files to _build/data/"
+	@cp -r data _build/
