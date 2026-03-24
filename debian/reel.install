@@ -1,4 +1,4 @@
-src/reel                         usr/bin/
+_build/reel                         usr/bin/
 
-data/com.MLSTidbits.Reel.desktop usr/share/applications/
-data/icons/scalable/com.MLSTidbits.Reel.svg usr/share/icons/hicolor/scalable/apps/
+_build/data/com.MLSTidbits.Reel.desktop usr/share/applications/
+_build/data/icons/scalable/com.MLSTidbits.Reel.svg usr/share/icons/hicolor/scalable/apps/

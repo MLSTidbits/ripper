@@ -43,31 +43,3 @@ Depends:
 Description: Qt Frontend for makemkvcon written in Python.
  Reel uses makemkvcon to rip DVDs and Blu-rays, and provides a user-friendly
  interface to manage the ripping process.
-
-
-Package: makemkv-bin
-Architecture: amd64
-Suggests: ffmpeg (>= 6.0), libmakemkv, mmccextr, mmgplsrv
-Description: MakeMKV command-line tools.
- This package provides the command-line tools for MakeMKV, which are used by
- the reel frontend to perform DVD and Blu-ray ripping tasks.
-
-Package: libmakemkv
-Architecture: amd64
-Depends: makemkv-bin
-Description: Shared library for MakeMKV.
- This package provides the shared library for MakeMKV, which is used by the
- reel frontend to perform DVD and Blu-ray ripping tasks.
-
-Package: mmccextr
-Architecture: amd64
-Depends: makemkv-bin
-Description: Closed Caption extractor for MakeMKV.
- This package provides a closed caption extractor for MakeMKV.
-
-Package: mmgplsrv
-Architecture: amd64
-Depends: makemkv-bin
-Description: MakeMKV GPL Server used for decrypting DVDs by MakeMKV CLI.
- This package provides the MakeMKV GPL Server, which is used for decrypting DVDs by
- the MakeMKV command-line interface (CLI).

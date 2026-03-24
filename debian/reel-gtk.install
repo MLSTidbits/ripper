@@ -1,6 +1,6 @@
 data/ui                          usr/share/reel/
 doc/version                      usr/share/doc/reel/
 
-src/gtk/main.py                      usr/lib/reel/
-src/gtk/core/*.py                    usr/lib/reel/core/
-src/gtk/ui/*.py                      usr/lib/reel/ui/
+_build/gtk/main.py                      usr/lib/reel/
+_build/gtk/core/*.py                    usr/lib/reel/core/
+_build/gtk/ui/*.py                      usr/lib/reel/ui/

@@ -64,6 +64,7 @@ binary-indep:
 	dh_builddeb
 
 binary-arch: build install
+	rm -f debian/files
 
 binary: binary-arch binary-indep clean
 
