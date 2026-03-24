@@ -58,6 +58,8 @@ class MakeMKVController(QObject):
         self._active_proc: Optional[subprocess.Popen] = None
         self._rip_cancelled: bool = False
         self._active_drive_index: int = 0
+        self._scanning: bool = False
+        self._loading: bool = False
 
     # ------------------------------------------------------------------ #
     #  Thread-safe emit helper                                             #
@@ -114,9 +116,12 @@ class MakeMKVController(QObject):
     # ------------------------------------------------------------------ #
 
     def scan_drives(self):
+        if self._scanning or self._loading:
+            return
         threading.Thread(target=self._scan_drives_thread, daemon=True).start()
 
     def _scan_drives_thread(self):
+        self._scanning = True
         try:
             result = subprocess.run(
                 [self._binary, "-r", "info", "disc:9999"],
@@ -136,6 +141,7 @@ class MakeMKVController(QObject):
             self._queue(lambda: self.error.emit(str(e)))
 
         self._drives = drives
+        self._scanning = False
         _d = list(drives)
         self._queue(lambda: self.drives_updated.emit(_d))
 
@@ -174,11 +180,14 @@ class MakeMKVController(QObject):
     # ------------------------------------------------------------------ #
 
     def load_disc(self, drive_index: int):
+        if self._scanning or self._loading:
+            return
         threading.Thread(
             target=self._load_disc_thread, args=(drive_index,), daemon=True
         ).start()
 
     def _load_disc_thread(self, drive_index: int):
+        self._loading = True
         self._log("INFO", f"Reading disc at index {drive_index}…")
         device_path = next(
             (d.device_path for d in self._drives if d.drive_index == drive_index),
@@ -233,6 +242,7 @@ class MakeMKVController(QObject):
 
         self._active_drive_index = drive_index
         self._titles = titles
+        self._loading = False
         _dp, _t = device_path, titles
         self._queue(lambda: self.titles_loaded.emit(_dp, _t))
 

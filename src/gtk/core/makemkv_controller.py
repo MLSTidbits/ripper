@@ -62,6 +62,10 @@ class MakeMKVController(GObject.Object):
         self._active_proc: Optional[subprocess.Popen] = None
         self._rip_cancelled: bool = False
         self._active_drive_index: int = 0   # set by load_disc(), used by start_rip()
+        # Serialise makemkvcon invocations — only one read operation at a time
+        self._op_lock = threading.Lock()
+        self._scanning: bool = False
+        self._loading: bool = False
         self._setup_volume_monitor()
 
     def _setup_volume_monitor(self):
@@ -167,10 +171,13 @@ class MakeMKVController(GObject.Object):
     # ------------------------------------------------------------------ #
 
     def scan_drives(self):
-        """Non-blocking drive scan. Emits drives-updated when done."""
+        """Non-blocking drive scan. Skips if a read operation is already running."""
+        if self._scanning or self._loading:
+            return
         threading.Thread(target=self._scan_drives_thread, daemon=True).start()
 
     def _scan_drives_thread(self):
+        self._scanning = True
         try:
             result = subprocess.run(
                 [self._binary, "-r", "info", "disc:9999"],
@@ -194,6 +201,7 @@ class MakeMKVController(GObject.Object):
             drives = []
 
         self._drives = drives
+        self._scanning = False
         GLib.idle_add(self.emit, "drives-updated", drives)
 
     # ------------------------------------------------------------------ #
@@ -226,8 +234,8 @@ class MakeMKVController(GObject.Object):
                 self._emit_log("WARNING", f"Eject returned non-zero: {err}")
         except FileNotFoundError:
             self._emit_log("ERROR", "'eject' command not found. Install it with your package manager.")
-        # except subprocess.TimeoutExpired:
-        #     self._emit_log("ERROR", f"Eject timed out for {device_path}")
+        except subprocess.TimeoutExpired:
+            self._emit_log("ERROR", f"Eject timed out for {device_path}")
         except Exception as e:
             self._emit_log("ERROR", str(e))
         # Re-scan drives so the UI reflects the empty tray
@@ -238,12 +246,15 @@ class MakeMKVController(GObject.Object):
     # ------------------------------------------------------------------ #
 
     def load_disc(self, drive_index: int):
-        """Load title list from the given drive index. Non-blocking."""
+        """Load title list. Skips if a scan or load is already in progress."""
+        if self._scanning or self._loading:
+            return
         threading.Thread(
             target=self._load_disc_thread, args=(drive_index,), daemon=True
         ).start()
 
     def _load_disc_thread(self, drive_index: int):
+        self._loading = True
         self._emit_log("INFO", f"Reading disc at index {drive_index}…")
         device_path = next((d.device_path for d in self._drives if d.drive_index == drive_index), str(drive_index))
         try:
@@ -300,6 +311,7 @@ class MakeMKVController(GObject.Object):
 
         self._active_drive_index = drive_index
         self._titles = titles
+        self._loading = False
         GLib.idle_add(self.emit, "titles-loaded", device_path, titles)
 
     # ------------------------------------------------------------------ #
